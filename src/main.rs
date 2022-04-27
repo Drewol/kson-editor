@@ -803,7 +803,7 @@ impl App for AppState {
                         self.editor.primary_clicked(pos)
                     }
 
-                    if response.middle_clicked() {
+                    if response.secondary_clicked() {
                         self.editor.middle_clicked(pos)
                     }
 
