@@ -458,13 +458,14 @@ pub fn rect_xy_wh(rect: [f32; 4]) -> Rect {
     Rect::from_x_y_ranges(x..=x + w, y..=y + h)
 }
 
-const TOOLS: [(&str, ChartTool); 6] = [
+const TOOLS: [(&str, ChartTool); 7] = [
     ("BT", ChartTool::BT),
     ("FX", ChartTool::FX),
     ("LL", ChartTool::LLaser),
     ("RL", ChartTool::RLaser),
     ("BPM", ChartTool::BPM),
     ("TS", ChartTool::TimeSig),
+    ("CAM", ChartTool::Camera),
 ];
 
 impl AppState {
