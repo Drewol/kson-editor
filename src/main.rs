@@ -686,6 +686,11 @@ impl App for AppState {
                             }
                         }
                     }
+                    ui.add(
+                        Slider::new(&mut self.editor.screen.beat_divider, 1..=8)
+                            .clamp_to_range(true)
+                            .text("Beat Divider"),
+                    );
                 })
             });
         }

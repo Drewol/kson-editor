@@ -51,6 +51,7 @@ pub struct ScreenState {
     pub x_offset: f32,
     pub x_offset_target: f32,
     pub beat_res: u32,
+    pub beat_divider: u32
 }
 
 impl ScreenState {
@@ -266,6 +267,7 @@ impl MainState {
                 x_offset: 0.0,
                 x_offset_target: 0.0,
                 beat_res: 48,
+                beat_divider: 2,
             },
             gui_event_queue: VecDeque::new(),
             save_path,
@@ -283,7 +285,7 @@ impl MainState {
 
     pub fn get_cursor_ms_from_mouse(&self) -> f64 {
         let tick = self.screen.pos_to_tick(self.mouse_x, self.mouse_y);
-        let tick = tick - (tick % (self.chart.beat.resolution / 2));
+        let tick = tick - (tick % (self.chart.beat.resolution / self.screen.beat_divider));
         self.chart.tick_to_ms(tick)
     }
 
@@ -1166,7 +1168,7 @@ impl MainState {
             let res = self.chart.beat.resolution;
             let lane = self.screen.pos_to_lane(x);
             let tick = self.screen.pos_to_tick(x, y);
-            let tick = tick - (tick % (res / 2));
+            let tick = tick - (tick % (res / self.screen.beat_divider));
             let tick_f = self.screen.pos_to_tick_f(x, y);
             if let Some(ref mut cursor) = self.cursor_object {
                 cursor.drag_start(
@@ -1188,7 +1190,7 @@ impl MainState {
             let lane = self.screen.pos_to_lane(x);
             let tick = self.screen.pos_to_tick(x, y);
             let tick_f = self.screen.pos_to_tick_f(x, y);
-            let tick = tick - (tick % (self.chart.beat.resolution / 2));
+            let tick = tick - (tick % (self.chart.beat.resolution / self.screen.beat_divider));
             if let Some(cursor) = &mut self.cursor_object {
                 cursor.drag_end(
                     self.screen,
@@ -1218,7 +1220,7 @@ impl MainState {
         let lane = self.screen.pos_to_lane(pos.x);
         let tick = self.screen.pos_to_tick(pos.x, pos.y);
         let tick_f: f64 = self.screen.pos_to_tick_f(pos.x, pos.y);
-        let tick = tick - (tick % (self.chart.beat.resolution / 2));
+        let tick = tick - (tick % (self.chart.beat.resolution / self.screen.beat_divider));
 
         (lane, tick, tick_f)
     }
